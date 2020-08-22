@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const db = require("./app/index.js");
+const db = require("./app/db");
 db.mongoose
     .connect(db.url, {
         useNewUrlParser: true,
@@ -39,6 +39,7 @@ require("./app/routes/icecream.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
+const { port } = require("./config");
+app.listen(port, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
