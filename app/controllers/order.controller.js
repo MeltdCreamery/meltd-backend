@@ -1,45 +1,42 @@
 const db = require("../db");
-const Icecream = db.icecreams;
+const Order = db.orders;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.flavor || !req.body.description) {
+    if (!req.body) {
         res.status(400).send({ message: "Content can not be empty!" });
         return;
     }
 
-    const icecream = new Icecream({
-        flavor: req.body.flavor,
-        description: req.body.description,
-        price: req.body.price,
-    });
+    const order = new Order({});
 
-    console.log("Creating icecrea: ", icecream);
+    console.log("Creating order: ", order);
 
-    Icecream.save(icecream)
+    Order.save(order)
         .then(data => {
             res.send(data);
+            // TODO: send email notification to meltdcreamery@gmail.com
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while creating the icecream.",
+                message: err.message || "Some error occurred while creating the order.",
             });
         });
 };
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-    const flavor = req.query.flavor;
-    let condition = flavor ? { flavor: { $regex: new RegExp(flavor), $options: "i" } } : {};
+    const name = req.query.name;
+    let condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
 
-    Icecream.find(condition)
+    Order.find(condition)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving icecreams.",
+                message: err.message || "Some error occurred while retrieving orders.",
             });
         });
 };
@@ -48,13 +45,13 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Icecream.findById(id)
+    Order.findById(id)
         .then(data => {
-            if (!data) res.status(404).send({ message: "Not icecream found with id " + id });
+            if (!data) res.status(404).send({ message: "No order found with id " + id });
             else res.send(data);
         })
         .catch(err => {
-            res.status(500).send({ message: "Error retrieving icecream with id=" + id });
+            res.status(500).send({ message: "Error retrieving order with id=" + id });
         });
 };
 
@@ -68,13 +65,13 @@ exports.update = (req, res) => {
 
     const id = req.params.id;
 
-    Icecream.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    Order.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
             if (!data) {
                 res.status(404).send({
-                    message: `Cannot update icecream with id=${id}. Maybe icecream was not found!`,
+                    message: `Cannot update order with id=${id}. Maybe order was not found!`,
                 });
-            } else res.send({ message: "Icecream was updated successfully." });
+            } else res.send({ message: "Order was updated successfully." });
         })
         .catch(err => {
             res.status(500).send({
@@ -87,36 +84,36 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Icecream.findByIdAndRemove(id)
+    Order.findByIdAndRemove(id)
         .then(data => {
             if (!data) {
                 res.status(404).send({
-                    message: `Cannot delete icecream with id=${id}. Maybe icecream was not found!`,
+                    message: `Cannot delete order with id=${id}. Maybe order was not found!`,
                 });
             } else {
                 res.send({
-                    message: "icecream was deleted successfully!",
+                    message: "Order was deleted successfully!",
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete icecream with id=" + id,
+                message: "Could not delete order with id=" + id,
             });
         });
 };
 
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
-    Icecream.deleteMany({})
+    Order.deleteMany({})
         .then(data => {
             res.send({
-                message: `${data.deletedCount} icecreams were deleted successfully!`,
+                message: `${data.deletedCount} orders were deleted successfully!`,
             });
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while removing all icecreams.",
+                message: err.message || "Some error occurred while removing all orders.",
             });
         });
 };
