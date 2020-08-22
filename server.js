@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const app = express();
 
-var corsOptions = {
+let corsOptions = {
     origin: "http://localhost:8081",
 };
 
@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const db = require("./app/models");
+const db = require("./app/index.js");
 db.mongoose
     .connect(db.url, {
         useNewUrlParser: true,

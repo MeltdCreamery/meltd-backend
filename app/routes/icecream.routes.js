@@ -1,7 +1,7 @@
 module.exports = app => {
-    const icecreams = require("../controllers/icecreams.controller.js");
+    const icecreams = require("../controllers/icecream.controller");
 
-    var router = require("express").Router();
+    let router = require("express").Router();
 
     // Create a new Tutorial
     router.post("/", icecreams.create);
@@ -10,16 +10,16 @@ module.exports = app => {
     router.get("/", icecreams.findAll);
 
     // Retrieve a single Tutorial with id
-    router.get("/:id", tutorials.findOne);
+    router.get("/:id", icecreams.findOne);
 
     // Update a Tutorial with id
-    router.put("/:id", tutorials.update);
+    router.put("/:id", icecreams.update);
 
     // Delete a Tutorial with id
-    router.delete("/:id", tutorials.delete);
+    router.delete("/:id", icecreams.delete);
 
     // Create a new Tutorial
-    router.delete("/", tutorials.deleteAll);
+    router.delete("/", icecreams.deleteAll);
 
     app.use("/api/icecreams", router);
 };

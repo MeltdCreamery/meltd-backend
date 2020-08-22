@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../index");
 const Icecream = db.icecreams;
 
 // Create and Save a new Tutorial
