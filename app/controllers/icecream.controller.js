@@ -12,7 +12,10 @@ exports.create = (req, res) => {
     const icecream = new Icecream({
         flavor: req.body.flavor,
         description: req.body.description,
+        price: req.body.price,
     });
+
+    console.log("Creating icecream: ", icecream);
 
     icecream
         .save(icecream)

@@ -3,6 +3,7 @@ module.exports = mongoose => {
         {
             flavor: String,
             description: String,
+            price: Number,
         },
         { timestamps: true }
     );

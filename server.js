@@ -40,5 +40,5 @@ require("./app/routes/icecream.routes")(app);
 // set port, listen for requests
 const { port } = require("./config");
 app.listen(port, () => {
-    console.log(`Server is running on port ${PORT}.`);
+    console.log(`Server is running on port ${port}.`);
 });
