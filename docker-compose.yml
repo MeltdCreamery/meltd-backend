@@ -1,0 +1,19 @@
+version: "2"
+services:
+    app:
+        container_name: meltd-backend
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - "./:/usr/src/app"
+            - "/usr/src/app/node_modules"
+        ports:
+            - "8080:8080"
+        links:
+            - mongo
+    mongo:
+        container_name: mongo
+        image: mongo
+        ports:
+            - "27017:27017"
